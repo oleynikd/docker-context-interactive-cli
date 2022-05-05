@@ -108,7 +108,20 @@ func main() {
     exec.Command("docker", "context", "use", selectedContext.Name).Run()
   } else {
     if (strings.HasPrefix(selectedContext.DockerEndpoint, "ssh://")) {
-      cmd := exec.Command("ssh", selectedContext.DockerEndpoint[6:len(selectedContext.DockerEndpoint)])
+      host := selectedContext.DockerEndpoint[6:len(selectedContext.DockerEndpoint)]
+      var args []string
+      i := strings.Index(host, ":")
+      if (i > 0) {
+        port := host[i+1:len(host)]
+        host := host[0:i]
+        args = append(args, host, "-p", port)
+      } else {
+        args = append(args, host, "-p", "22")
+      }
+
+      fmt.Printf("%v\n", args)
+
+      cmd := exec.Command("ssh", args...)
       cmd.Stdout = os.Stdout
       cmd.Stdin = os.Stdin
       cmd.Stderr = os.Stderr
