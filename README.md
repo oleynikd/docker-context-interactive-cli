@@ -12,13 +12,13 @@ alias dl="docker context ls"
 
 ### To build with `docker`
 ```bash
-docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=linux -e GOARCH=amd64 golang:1.18 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-linux main.go
-docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=windows -e GOARCH=amd64 golang:1.18 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-win.exe main.go
-docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=darwin golang:1.18 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-mac main.go
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=linux -e GOARCH=amd64 golang:1.22.5 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-linux main.go
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=windows -e GOARCH=amd64 golang:1.22.5 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-win.exe main.go
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp -e GOOS=darwin golang:1.22.5 go build -v -ldflags "-s -w" -o ./bin/docker-context-interactive-mac main.go
 ```
 
 ### To run dev with `docker`
 ```bash
-docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.18 bash
+docker run -it --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.22.5 bash
 go run main.go
 ```
