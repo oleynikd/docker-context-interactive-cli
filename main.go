@@ -14,13 +14,12 @@ import (
 )
 
 type Context struct {
-  Current bool
+  Name string
   Description string
   DockerEndpoint string
-  KubernetesEndpoint string
+  Current bool
+  Error string
   ContextType string
-  Name string
-  StackOrchestrator string
 }
 
 func end() {
@@ -85,8 +84,19 @@ func main() {
     die(err.Error())
   }
 
+  // replace newline with comma
+  fullJsonStr := strings.ReplaceAll(string(jsonStr), "\n", ",")
+  // remove trailing comma
+  fullJsonStr = strings.TrimSuffix(fullJsonStr, ",")
+  // wrap in array
+  fullJsonStr = "[" + fullJsonStr + "]"
+
   var ctxs []Context
-  json.Unmarshal([]byte(jsonStr), &ctxs)
+  err2 := json.Unmarshal([]byte(fullJsonStr), &ctxs)
+
+  if err2 != nil {
+    die(err2.Error())
+  }
 
   selectedContextName := ""
   list, current := getNamesAndCurrent(ctxs)
